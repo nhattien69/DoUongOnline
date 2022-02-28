@@ -1,0 +1,127 @@
+﻿@model IEnumerable<DoUongOnline.Models.ChiTietDonHang>
+
+@{
+    ViewBag.Title = "DetailList";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+<style>
+    .card {
+        
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid rgba(0,0,0,.125);
+        border-radius: .25rem;
+    }
+    .mb-3, .my-3 {
+        margin-top: 3rem;
+        margin-bottom: 1rem !important;
+    }
+    .card-header:first-child {
+        border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
+    }
+    .card-header {
+        padding: .75rem 1.25rem;
+        margin-bottom: 0;
+        background-color: rgba(0,0,0,.03);
+        border-bottom: 1px solid rgba(0,0,0,.125);
+    }
+    .card-body {
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        padding: 1.25rem;
+    }
+</style>
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fa fa-table"></i> Hóa đơn
+    </div>
+    <div class="card-body">
+        <h2 style="text-align: center;font-weight:bold;color:red">HÓA ĐƠN BÁN LẺ</h2>
+        <div style="margin-top:20px">
+            <h4><strong>Họ tên người mua hàng:</strong> @ViewBag.tenkh1</h4>
+            <h4><strong>Địa chỉ giao hàng:</strong> @ViewBag.diachi1</h4>
+            <h4><strong>Mã hóa đơn:</strong>  @ViewBag.mahd</h4>
+            <h4><strong>Người tạo hóa đơn:</strong>  @ViewBag.tennv</h4>
+            <h4><strong>Ngày tạo hóa đơn:</strong>  @ViewBag.ngaytaohd</h4>
+
+        </div>
+        <table class="table table-bordered">
+            <tr>
+                <th>
+                    Sản phẩm
+                </th>
+                <th>
+                    Size sản phẩm
+                </th>
+                <th>
+                    Số lượng
+                </th>
+
+                <th>
+                    Giá bán (VND)
+                </th>
+                <th>
+                    Ghi chú
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SanPham.TenSP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SizeSanPham.SizeSP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoLuong)
+                    </td>
+                    <td>
+                        @{ string giaban = item.GiaBan.ToString("#,##");}
+                        @Html.DisplayFor(modelItem => giaban)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GhiChuChiTiet)
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+        <div style="width: 300px; position: relative; left: 700px">
+            <h4><strong>Tổng Tiền: </strong> @ViewBag.tongtien VND</h4>
+        </div>
+
+        <div style="width: 300px; position: relative; left: 730px;top:20px">
+            <h6>Ngày @DateTime.Today.Day Tháng @DateTime.Today.Month Năm @DateTime.Today.Year</h6>
+        </div>
+    </div>
+</div>
+    
+        <div>
+            <input id="printpagebutton" type="button" onclick="printpage();" value="In file PDF" />
+        </div>
+    
+
+        <script type="text/javascript">
+            function printpage() {
+                //Get the print button and put it into a variable
+                var printButton = document.getElementById("printpagebutton");
+                //Set the print button visibility to 'hidden'
+                printButton.style.visibility = 'hidden';
+                //Print the page content
+                window.print()
+                //Set the print button to 'visible' again
+                //[Delete this line if you want it to stay hidden after printing]
+                printButton.style.visibility = 'visible';
+            }
+        </script>

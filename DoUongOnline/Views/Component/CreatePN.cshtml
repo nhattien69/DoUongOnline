@@ -1,0 +1,32 @@
+﻿@model DoUongOnline.Models.PhieuNhap
+
+@using (Html.BeginForm(null,null,FormMethod.Post, new { id = "submit" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input style="visibility:hidden" type="submit" value="Tạo mới" class="btn btn-primary" />
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    window.onload = function () {
+        var auto = setTimeout(function () { autoRefresh(); }, 0.3);
+
+        function submitform() {
+            alert('Đã tạo phiếu');
+            document.forms["submit"].submit();
+        }
+
+        function autoRefresh() {
+            clearTimeout(auto);
+            auto = setTimeout(function () { submitform(); autoRefresh(); }, 1000);
+        }
+    }
+</script>
+

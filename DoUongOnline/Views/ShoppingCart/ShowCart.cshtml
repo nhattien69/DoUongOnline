@@ -1,0 +1,227 @@
+﻿
+@model DoUongOnline.Models.Cart
+
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .body {
+        margin: 50px 0 100px 0;
+    }
+
+    .title {
+        text-align: center;
+    }
+
+    .btn_XGH {
+        border: none !important;
+        border-radius: 5px;
+        background-color: #444444;
+        color: white;
+        height: 40px;
+        width: 150px
+    }
+
+    .btn_TT {
+        border: none !important;
+        border-radius: 5px;
+        background-color: #fb8d17;
+        color: white;
+        height: 40px;
+        width: 150px
+    }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 22px;
+    }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 17px;
+            width: 17px;
+            left: 3px;
+            bottom: 2.6px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #fb8d17;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #fb8d17;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(17px);
+        -ms-transform: translateX(17px);
+        transform: translateX(17px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+</style>
+<div class="body">
+    <h2 class="title">GIỎ HÀNG CỦA TÔI</h2>
+    @if (Model != null)
+    {
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <td>STT</td>
+                    <th>Tên sản phẩm</th>
+                    <th>Hình ảnh</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                    <th>Ghi chú</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            @{int i = 0;}
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    decimal total = item._quantity * (decimal)item._sanpham.GiaBan;
+                    <tr>
+                        @{i++;}
+                        <td>@i</td>
+                        <td>@Html.DisplayFor(model => item._sanpham.TenSP)</td>
+                        <td><img src="@Url.Content(item._sanpham.HinhAnh)" height="50" width="50" /></td>
+                        <td>@Html.DisplayFor(model => item._sanpham.GiaBan)</td>
+                        <td>
+                            @using (Html.BeginForm("Update_Cart_Quantity", "ShoppingCart"))
+                            {
+                                <input type="hidden" value="@item._sanpham.IdSP" name="IdSP" />
+                                <input type="number" value="@item._quantity" name="cartQuantity" />
+                                <input type="submit" value="Cập nhật" />
+                            }
+                        </td>
+                        <td>@total</td>
+                        <td>
+                            @using (Html.BeginForm("Pay", "ShoppingCart"))
+                            {
+                                <input type="text" name="txtGhiChu" />
+                            }
+                        </td>
+
+                        <td>
+                            <a href="/ShoppingCart/RemoveCart/@item._sanpham.IdSP" style="color: red;"><i class="fa fa-trash"></i> Xóa</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+            <tfoot style="border: none">
+                <tr style="border: none">
+                    <td colspan="6" style="text-align: right; border: none">
+                        Tổng tiền:
+                    </td>
+                    <td style="border: none">
+                        @Model.Total_money()
+                    </td>
+                </tr>
+                <tr style="border: none">
+                    <td colspan="6" style="text-align: right; border: none">
+                        Sử dụng điểm tích lũy:
+                    </td>
+                    <td style="border: none">
+                        @Session["customer_point"]
+                        <label class="switch">
+                            <input type="checkbox" id="mychecked">
+                            <span class="slider round"></span>
+                        </label>
+                    </td>
+                </tr>
+                @{string checkPoint = (string)Session["Checked_Point"];}
+                @if (checkPoint == "false")
+                {
+                    <tr style="border: none">
+                        <td colspan="6" style="text-align: right; border: none">
+                            Được giảm:
+                        </td>
+                        <td style="border: none">
+                            0
+                        </td>
+                    </tr>
+                    <tr style="border: none">
+                        <td colspan="6" style="text-align: right; border: none">
+                            Tổng đơn:
+                        </td>
+                        <td style="border: none">
+                            @Model.Total_money()
+                        </td>
+                    </tr>
+                }
+                else if (checkPoint == "true")
+                {
+                    <tr style="border: none">
+                        <td colspan="6" style="text-align: right; border: none">
+                            Được giảm:
+                        </td>
+                        <td style="border: none">
+                            @Session["customer_point"]
+                        </td>
+                    </tr>
+                    <tr style="border: none">
+                        <td colspan="6" style="text-align: right; border: none">
+                            Tổng đơn:
+                        </td>
+                        <td style="border: none">
+                            @{double total = (double)Model.Total_money() - Convert.ToInt32(Session["customer_point"]);}
+                            @total
+                        </td>
+                    </tr>
+                }
+            </tfoot>
+        </table>
+
+
+        <div style="margin-left: 950px">
+            <input type="button" value="Xóa giỏ hàng" class="btn_XGH" onclick="location.href = '@Url.Action("ClearCart", "ShoppingCart")'; window.alert('Xóa giỏ hàng thành công')" />
+            <input type="submit" value="Thanh toán" class="btn_TT" onclick="location.href = '@Url.Action("Pay", "ShoppingCart")';" />
+            <script>
+                if (TempData["Pay"] != null) {
+                    alert('Thanh toán thành công');
+                }
+            </script>
+        </div>
+    }
+    else
+    {
+        @Html.Partial("EmptyCart");
+    }
+</div>

@@ -1,0 +1,4 @@
+﻿@model DoUongOnline.Models.KhuyenMai
+@Html.DropDownListFor(model => model.IdKM,
+new SelectList(Model.ListKM.OrderBy(model => model.IdKM), "IdKM", "GhiChuKM"), "Chọn loại khuyến mãi")
+

@@ -1,0 +1,184 @@
+﻿@model DoUongOnline.Models.SanPham
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+
+<script type="text/javascript">
+    function myFunction() {
+        // Get the checkbox
+        var checkBox = document.getElementById("myCheck");
+        if (checkBox.checked == true) {
+            @Session["condition"] == true;
+        }
+        else {
+              @Session["condition"] == false;
+        }
+    }
+</script>
+
+<style>
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 22px;
+    }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    /* The slider */
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 17px;
+            left: 5px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    /*  th{
+        border: 1px solid black;
+        border-collapse: collapse;
+    }*/
+</style>
+
+@using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <ol class="breadcrumb" style="font-size:large">
+        <li class="breadcrumb-item">
+            <a>Quản lý</a>
+        </li>
+        <li class="breadcrumb-item active">Cập nhật sản phẩm @Session["tensp"]</li>
+    </ol>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.IdSP)
+    <div class="form-group">
+        @Html.LabelFor(model => model.TenSP, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <div class="control-label col-md-2">Ảnh xem trước</div>
+        <div class="col-md-10">
+            <img src="@Url.Content(Session["imgPath"].ToString())" style="width:80px; height:80px" id="previewImg" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.HinhAnh, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div style="margin-top:5px" class="col-md-10">
+            <input type="file" name="UploadImage" onchange="ChangeImage(this, document.getElementById('previewImg'))" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.MoTa, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.MoTa, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.GiaBan, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.GiaBan, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.GiaBan, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TinhTrang, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="checkbox" style="margin-left:30px;margin-top:-4px">
+                @Html.CheckBoxFor(model => model.TinhTrang, htmlAttributes: new { @style = "zoom:1.5" })
+                @Html.ValidationMessageFor(model => model.TinhTrang, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IdLoaiSP, htmlAttributes: new { @class = "control-label col-md-2" })
+
+        <div class="col-md-10">
+            <div class="dropdown" style="margin-top:5px;font-size:medium">
+                @Html.DropDownList("IdLoaiSP", String.Empty)
+                @Html.ValidationMessageFor(model => model.IdLoaiSP, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IdKM, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="dropdown" style="margin-top:5px;font-size:medium">
+                @{Html.RenderAction("SelectKM", "Product");
+                }
+            </div>
+        </div>
+    </div>
+  
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Lưu" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+}
+
+
+

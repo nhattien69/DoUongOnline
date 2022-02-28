@@ -1,0 +1,43 @@
+﻿@using DoUongOnline.Models;
+@using PagedList.Mvc;
+@model PagedList.PagedList<LoaiSanPham>
+@{
+    ViewBag.Title = "ListLoaiSP";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+
+<div>
+    <i class="fa fa-plus-square">
+        <a style="text-decoration:none;color:orangered;font-size:large" href="@Url.Action("CreateLoaiSP", "Product")"> Tạo loại sản phẩm</a>
+    </i>
+</div>
+&ensp;
+
+<table class="table">
+    <tr>
+        <th>
+            ID loại sản phẩm
+        </th>
+        <th>
+            Loại sản phẩm
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdLoaiSP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenLoaiSP)
+            </td>
+        </tr>
+    }
+
+</table>
+Trang @( Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+<div class="MenuPage">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+</div>

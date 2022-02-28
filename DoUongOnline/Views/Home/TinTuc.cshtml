@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "TinTuc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    body {
+        background-color: #fff;
+    }
+
+    div {
+        display: block;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tintuc {
+        display: block;
+        width: 1000px;
+        height: 1850px;
+        margin-left: 270px;
+        margin-top: 100px;
+        box-shadow: 5px 10px 20px 1px;
+    }
+
+    .chu {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        background-color: #fb8d17;
+        color: #f1f1f1;
+        border-radius: 25px 25px 25px 25px;
+        transition: .2s;
+    }
+
+        .btn:hover, .btn:focus {
+            border: 1px solid #333;
+            background-color: #fff;
+            color: #000;
+        }
+</style>
+<body>
+    <div class="tintuc">
+        <br />
+        <h2 class="chu" style="margin-bottom: 30px;color:black">ĐẦU TUẦN HĂNG SAY, THE COFFEE HOUSE MỜI LIỀN 20K</h2>
+        <div class="chu">
+            <p><strong> </strong>Dù đầu tuần task có nhiều cỡ nào thì Sáng cà phê, chiều trà trái cây từ The Coffee House là mọi thứ xong ngay!</p>
+            <figure class="kg-image-card">
+                <img src="https://feed.thecoffeehouse.com//content/images/2021/11/SOCIAL--3--min.jpg" class="kg-image" style="display: block; width: 100%; margin: 14px auto;">
+            </figure>
+            <p><strong><a href="https://www.thecoffeehouse.com/product-listing">ĐẶT HÀNG NGAY</a></strong></p>
+            <p>Từ ngày 22/11 - 30/11, The Coffee House mời bạn <strong>20K cho đơn hàng 89K </strong>khi nhập mã <strong>CUNGNHAU</strong> để bạn thỏa thích thưởng thức các món nước ngon nhé!</p><p>-----------<br><strong>Đặt hàng ngay:</strong><br><em>👉Website: <a href="https://www.thecoffeehouse.com/">https://www.thecoffeehouse.com</a></em><br><em>👉App The Coffee House: https://tchapp.page.link/installv5</em><br><em>👉Số điện thoại: 18006936</em></p><p><em>- Giảm 20K cho đơn hàng 89K<br>- Áp dụng cho dịch vụ delivery (Giao tận nơi)<br>- Áp dụng cho sản phẩm bánh, nước, snack Không áp dụng cho merchandise, cà phê gói/lon, Tearoma (Trà lá, trà túi lọc), sản phẩm chai Fresh, topping và các loại combo<br>- Không áp dụng cho các chương trình khuyến mãi song song<br>- Ưu đãi chỉ áp dụng cho đơn hàng được giao từ 22/11 đến hết ngày 30/11/2021<br>- Số lượng ưu đãi có hạn</em></p><p><em>Hiện tại, để biết khu vực của mình có đặt hàng được không, bạn hãy nhập địa chỉ của mình vào website hoặc app của The Coffee House sẽ có thông báo cụ thể nhé.</em><br><em>Danh sách hoạt động của các cửa hàng trong hệ thống The Coffee House sẽ được update liên tục, bạn có thể theo dõi tại đây:<a href="https://bit.ly/3Epaotz?fbclid=IwAR3il5EhQWeE37QUBQgerv45Bxm09Pa1VDhSuBnzQtdC1ncM3eWWGkCcRJE"> https://bit.ly/3Epaotz</a></em></p><ul><li>The Coffee House luôn tuân thủ về an toàn phòng dịch</li><li>Nhân viên của The Coffee House nghiêm túc thực hiện 5K trong suốt quá trình hoạt động</li><li>Thời gian giao hàng có thể kéo dài hơn thông thường do hạn chế về tài xế và quy định phòng dịch của chính phủ, mong các bạn thông cảm và cảm ơn các bạn đã đồng hành cùng The Coffee House.</li></ul>
+        </div>
+    </div>
+
+    <br />
+    <h2 style="text-align:center"><strong>Tin Tức</strong></h2><br />
+
+    <div style="margin:0 30px 0 30px" class="row text-center">
+        <div class="col-sm-4">
+            <div class="thumbnail">
+                <img style="width:400px;height:300px" src="https://feed.thecoffeehouse.com/content/images/2021/11/APP-NEWS--15--1.jpg" alt="Paris">
+                <p><strong>CHỌN HƯƠNG TINH TẾ BÍ KÍP THOÁT Ế DÀNH CHO NGƯỜI CÔ ĐƠN ĐÃ LÂU</strong></p>
+
+                <button class="btn"><a style="color:black" href=@Url.Action("TinTuc","Home")>Đọc tiếp</a></button>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="thumbnail">
+                <img style="width:400px;height:300px" src="https://feed.thecoffeehouse.com/content/images/2021/11/HER0.jpg" alt="New York">
+                <p><strong>COMBO CÀ PHÊ NHÀ - NGON NHƯ QUÁN CHỈ TỪ 109.000đ</strong></p>
+
+                <button class="btn"><a style="color:black" href=@Url.Action("TinTuc","Home")>Đọc tiếp</a></button>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="thumbnail">
+                <img style="width:400px;height:300px" src="https://feed.thecoffeehouse.com/content/images/2021/11/TCH_TeacherDay-social.jpg" alt="San Francisco">
+                <p><strong>TRI ÂN NGÀY NHÀ GIÁO - TRAO NGÀN DEAL “ĐIỂM 10”</strong></p>
+
+                <button class="btn"><a style="color:black" href=@Url.Action("TinTuc","Home")>Đọc tiếp</a></button>
+            </div>
+        </div>
+    </div>
+
+</body>
+<footer class="container-fluid text-center">
+    <p style="color:#fb8d17">Nhóm 11</p>
+</footer>

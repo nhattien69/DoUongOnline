@@ -1,0 +1,154 @@
+﻿@model DoUongOnline.Models.NhanVien
+
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <title>Login Employee</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+            font-size: 2rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            text-align: left;
+            background-color: #fff;
+        }
+
+        .card {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid rgba(0,0,0,.125);
+            border-radius: .25rem;
+        }
+
+        .bg-dark {
+            background-color: #343a40 !important;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .ml-auto, .mx-auto {
+            margin-left: auto !important;
+        }
+
+        .mr-auto, .mx-auto {
+            margin-right: auto !important;
+        }
+
+        .mt-5, .my-5 {
+            margin-top: 4.2rem !important;
+        }
+
+        .card-header {
+            padding: .75rem 1.25rem;
+            margin-bottom: 0;
+            background-color: rgba(0,0,0,.03);
+            border-bottom: 1px solid rgba(0,0,0,.125);
+        }
+
+            .card-header:first-child {
+                border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
+            }
+
+        .card-body {
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+            padding: 1.25rem;
+        }
+
+        label {
+            display: inline-block;
+            margin-bottom: .5rem;
+        }
+
+        .card-login {
+            max-width: 430px;
+        }
+
+        input {
+            max-width: 400px;
+        }
+
+        .form-control {
+            display: block;
+            width: 1000px;
+            padding: .375rem .75rem;
+            font-size: 1.8rem;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-image: none;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        }
+
+        .container {
+            max-width: 960px;
+        }
+    </style>
+</head>
+<body class="bg-dark">
+    <div class="container">
+        <div class="card card-login mx-auto mt-5">
+            <div class="card-header">Đăng nhập nhân viên</div>
+            <div class="card-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1"><i class="fa fa-user"></i> Email</label>
+
+                        @Html.TextBoxFor(model => model.EmailNV, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.EmailNV, null, new { @style = "color:red" })
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputPassword1"><i class="fa fa-lock"></i> Mật khẩu</label>
+
+                        @Html.PasswordFor(model => model.MatKhau, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MatKhau, null, new { @style = "color:red" })
+
+                    </div>
+
+
+                    <input style="font-size:2rem" type="submit" value="Đăng nhập" class="btn btn-primary btn-block" />
+
+
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

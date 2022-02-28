@@ -1,0 +1,147 @@
+﻿@using DoUongOnline.Models;
+@using PagedList.Mvc
+@model PagedList.PagedList<KhuyenMai>
+
+@{
+    ViewBag.Title = "ListDiscount";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+
+<style>
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 22px;
+    }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    /* The slider */
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 17px;
+            left: 5px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    /*  th{
+        border: 1px solid black;
+        border-collapse: collapse;
+    }*/
+</style>
+@if (Session["employee"] != null && ((DoUongOnline.Models.NhanVien)Session["employee"]).IdLoaiNV.ToString() == "QL")
+{
+    @*<div>
+        <i class="fa fa-plus-square">
+            <a style="text-decoration:none;color:orangered;font-size:large" href="@Url.Action("CreateDiscount", "Product")"> Tạo khuyến mãi</a>
+        </i>
+    </div>*@
+    <input class="btn btn-primary" style="margin-top:10px;margin-bottom:10px" value="Tạo mới khuyến mãi" type="submit" onclick="location.href='@Url.Action("CreateDiscount", "Product")'" />
+}
+&ensp;
+
+<ol class="breadcrumb" style="font-size:large">
+    <li class="breadcrumb-item">
+        <a>Quản lý</a>
+    </li>
+    <li class="breadcrumb-item active">Danh sách khuyến mãi </li>
+</ol>
+<table class="table">
+    <tr>
+        <th>
+            Mã khuyến mãi
+        </th>
+        <th>
+            Phần trăm khuyến mãi
+        </th>
+        <th>
+            Ngày hết hạn
+        </th>
+        <th>
+            Ghi chú
+        </th>
+     
+        <th>
+            Tình trạng
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdKM)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhanTramKM) %
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayHetHan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GhiChuKM)
+            </td>
+
+            <td>
+                <label class="switch">
+                    <input type="checkbox" disabled="disabled" checked="@item.TinhTrang" />
+                    <span class="slider round"></span>
+                </label>
+            </td>
+            <td>
+                @Html.ActionLink(" ", "EditKM", new { id = item.IdKM }, new { @class = "fa fa-edit fa-lg" })
+            </td>
+        </tr>
+    }
+
+</table>
+ Trang @( Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+<div class="MenuPage">
+    @Html.PagedListPager(Model, page => Url.Action("List", new { page = page }))
+</div>

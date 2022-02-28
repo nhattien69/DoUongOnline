@@ -1,0 +1,184 @@
+﻿@using DoUongOnline.Models;
+@using PagedList.Mvc
+@model PagedList.PagedList<SanPham>
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+<style>
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 22px;
+    }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    /* The slider */
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 17px;
+            left: 5px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    /*  th{
+        border: 1px solid black;
+        border-collapse: collapse;
+    }*/
+</style>
+<ol class="breadcrumb" style="font-size:large">
+    <li class="breadcrumb-item">
+        <a>Quản lý</a>
+    </li>
+    <li class="breadcrumb-item active">Danh sách sản phẩm </li>
+</ol>
+<div class="row">
+    <div class="col-sm-12 col-md-6">     
+            @using (Html.BeginForm("List", "Product", FormMethod.Get))
+            {
+                <b>Tìm kiếm : </b> @Html.RadioButton("searchBy", "TenSP", true, new { @style = "margin-left:10px;font-size:large" }) <text> Tên sản phẩm </text>
+                @Html.RadioButton("searchBy", "TenLoaiSP", new { @style = "margin-left:10px;font-size:medium" }) <text> Loại sản phẩm </text> <br />
+                @Html.TextBox("search") <input type="submit" value="Tìm kiếm" />
+
+            }
+      
+    </div>
+</div>
+<input class="btn btn-primary" style="margin-top:10px" value="Tải lại danh sách" type="submit" onclick="location.href='@Url.Action("List", "Product")'" />
+<div style="margin-top:10px">
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>
+                Mã sản phẩm
+            </th>
+            <th>
+                Tên sản phẩm
+            </th>
+            <th>
+                Hình ảnh
+            </th>
+            <th>
+                Mô tả
+            </th>
+            <th>
+                Giá bán (VND)
+            </th>
+
+            <th>
+                Giá sau khuyến mãi (VND)
+            </th>
+            <th>
+                Loại khuyến mãi
+            </th>
+            <th>
+                Tình trạng
+            </th>
+            <th>
+                Loại sản phẩm
+            </th>
+            <th>
+                Số lượng còn 
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdSP)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenSP)
+                </td>
+                <td style="width:fit-content()">
+                    <img style="width:80px;height:80px;margin-left:auto;margin-right:auto" src="@Url.Content(item.HinhAnh)" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MoTa)
+                </td>
+                <td>
+                    @{ string giaban = item.GiaBan.ToString("#,##");}
+                     @Html.DisplayFor(modelItem => giaban)              
+                </td>
+                <td>               
+                 
+                    @{ string giabansauKM = item.GiaSauKM.ToString("#,##");}
+                     @Html.DisplayFor(modelItem => giabansauKM)   
+                        
+                    </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.KhuyenMai.GhiChuKM)
+                </td>
+                <td>
+                    <label class="switch">
+                        <input type="checkbox" disabled="disabled" checked="@item.TinhTrang" />
+                        <span class="slider round"></span>
+                    </label>
+                </td>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.LoaiSanPham.TenLoaiSP)
+                </td>
+
+                 <td>
+                    @Html.DisplayFor(modelItem => item.SoLuongCon)
+                </td>
+                <td>
+                    @Html.ActionLink(" ", "Edit", new { id = item.IdSP }, new { @class = "fa fa-edit fa-lg" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+  Trang @( Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+<div class="MenuPage">
+    @Html.PagedListPager(Model, page => Url.Action("List", new { page = page }))
+</div>

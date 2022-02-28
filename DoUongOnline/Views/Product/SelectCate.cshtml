@@ -1,0 +1,3 @@
+﻿@model DoUongOnline.Models.LoaiSanPham
+    @Html.DropDownListFor(model=> model.IdLoaiSP,
+    new SelectList(Model.ListLoaiSanPham.OrderBy(model=>model.TenLoaiSP),"IdLoaiSP","TenLoaiSP"),"-- Loại sản phẩm --")

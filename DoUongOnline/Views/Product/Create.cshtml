@@ -1,0 +1,79 @@
+﻿@model DoUongOnline.Models.SanPham
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+
+
+<script src="~/Scripts/script.js"></script>
+@using (Html.BeginForm("Create", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div class="form-horizontal">
+        <ol class="breadcrumb" style="font-size:large">
+            <li class="breadcrumb-item">
+                <a>Quản lý</a>
+            </li>
+            <li class="breadcrumb-item active">Tạo sản phẩm</li>
+        </ol>
+        <hr />      
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TenSP, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control" } })
+
+            </div>
+        </div>
+
+         <div class="form-group">
+            @Html.LabelFor(model => model.HinhAnh, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div style="margin-top:5px" class="col-md-10">
+                <input type="file" name="UploadImage" onchange="ChangeImage(this, document.getElementById('previewImg'))" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2" >Ảnh xem trước</div>
+            <div class="col-md-10">
+                <img src="@Url.Content(Model.HinhAnh)" style="width:20%; height:20%" id="previewImg" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MoTa, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MoTa, new { htmlAttributes = new { @class = "form-control" } })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GiaBan, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GiaBan, new { htmlAttributes = new { @class = "form-control" } })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2" style="font-weight:bold"> Loại sản phẩm</div>
+            <div class="col-md-10" style="margin-top:5px;font-size:medium">
+                @{Html.RenderAction("SelectCate", "Product");
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Tạo mới" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,205 @@
+﻿@model DoUongOnline.Models.NhanVien
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+<style>
+    #gtco-header {
+        background-size: cover;
+        background-position: top center;
+        background-repeat: no-repeat;
+        position: relative;
+    }
+
+    .gtco-cover {
+        height: 500px;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        position: relative;
+        float: left;
+        width: 100%;
+    }
+
+        .gtco-cover .overlay {
+            z-index: 1;
+            position: absolute;
+            bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0);
+        }
+
+        .gtco-cover > .gtco-container {
+            position: relative;
+            z-index: 10;
+        }
+
+    .gtco-container {
+        max-width: 1100px;
+        position: relative;
+        margin: 0 auto;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+    }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    /* The slider */
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 17px;
+            left: 5px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                <ol class="breadcrumb" style="font-size:large">
+                    <li class="breadcrumb-item">
+                        <a>Quản lý</a>
+                    </li>
+                    <li class="breadcrumb-item active">Cập nhật nhân viên</li>
+                </ol>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.IdNV)
+                @Html.HiddenFor(model => model.NgayCapTK)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EmailNV, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.EmailNV, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.EmailNV, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MatKhau, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.MatKhau, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TenNhanVien, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.TenNhanVien, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.TenNhanVien, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SDTNV, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.SDTNV, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SDTNV, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NgaySinh, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.NgaySinh, new { htmlAttributes = new { @class = "form-control" } })             
+                    </div>                   
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DiaChi, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TinhTrang, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox" style="margin-left:30px;margin-top:-4px">
+                            @Html.CheckBoxFor(model => model.TinhTrang, htmlAttributes: new { @style = "zoom:1.5" })
+                            @Html.ValidationMessageFor(model => model.TinhTrang, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IdLoaiNV, "IdLoaiNV", new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="dropdown" style="margin-top:5px;font-size:medium" >
+                            @Html.DropDownList("IdLoaiNV", String.Empty)
+                            @Html.ValidationMessageFor(model => model.IdLoaiNV, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Lưu" class="btn btn-primary" />
+                    </div>
+                </div>             
+            </div>
+           
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

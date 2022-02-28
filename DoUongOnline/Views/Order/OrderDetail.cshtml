@@ -1,0 +1,71 @@
+﻿@model IEnumerable<DoUongOnline.Models.ChiTietDonHang>
+
+@{
+    ViewBag.Title = "OrderDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .container {
+        margin-top: 30px;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    .btn_HDH {
+        border: 1px solid #fb8d17;
+        border-radius: 5px;
+        background-color: white;
+        color: #fb8d17;
+        height: 40px;
+        width: 150px
+    }
+
+    .btn_CTDH {
+        margin-left: 800px;
+    }
+</style>
+<div class="container">
+    <h2>Chi tiết đơn hàng</h2>
+
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>STT</th>
+            <th>Sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Giá bán</th>
+            <th>Ghi chú</th>
+        </tr>
+
+        @{
+            int i = 0;
+            foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>@i</td>
+                    <td>@item.SanPham.TenSP</td>
+                    <td>@item.SoLuong</td>
+                    <td>@item.GiaBan</td>
+                    <td>@item.GhiChuChiTiet</td>
+                </tr>
+            }
+        }
+    </table>
+
+    <div class="btn_CTDH">
+        @using (Html.BeginForm("CancelOrder", "Order", new { id = Session["idDH"] }))
+        {
+            <input type="submit" value="Hủy đơn hàng" class="btn_HDH" />
+        }
+    </div>
+
+    @if (TempData["Message_CancelOrder"] != null)
+    {
+        <br />
+        <div class="alert alert-danger"><b>@TempData["Message_CancelOrder"]</b></div>
+        TempData["Message_CancelOrder"] = null;
+    }
+</div>
+

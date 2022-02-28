@@ -1,0 +1,82 @@
+﻿@using DoUongOnline.Models;
+@using PagedList.Mvc;
+@model PagedList.PagedList<HoaDon>
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+<ol class="breadcrumb" style="font-size:large">
+    <li class="breadcrumb-item">
+        <a>Quản lý</a>
+    </li>
+    <li class="breadcrumb-item active">Danh sách hóa đơn</li>
+</ol>
+
+@using (Html.BeginForm())
+{
+    <div class="row" style="margin-top:0px;margin-bottom:10px">
+        <div class="col-md-3">
+            <label for="date_start">Từ ngày</label>
+            @Html.TextBox("beginDate", null, new { @type = "date", @class = "form-control" })
+        </div>
+        <div class="col-md-3">
+            <label for="date_end">Tới ngày</label>
+            @Html.TextBox("endDate", null, new { @type = "date", @class = "form-control" })
+        </div>
+        <div class="col-md-2">
+            <label for="date_end" style="visibility:hidden">End Date</label>
+            <input type="submit" onclick="return checkday()" class="btn btn-primary btn-block" value="Tra hóa đơn">
+        </div>
+    </div>
+}
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Mã hóa đơn
+        </th>
+        <th>
+            Mã đơn hàng
+        </th>
+        <th>
+            Tổng tiền (VND)
+        </th>
+        <th>
+            Nhân viên tạo đơn
+        </th>
+        <th>
+            Ngày tạo hóa đơn
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdHD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdDH)
+            </td>
+            <td>
+                @{ string giaban = item.DonHang.TongTien.ToString("#,##");}
+                @Html.DisplayFor(modelItem => giaban)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NhanVien.TenNhanVien)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayTaoHD)
+            </td>
+            <td>
+                <i class="fa fa-lg fa-external-link"></i>
+                @Html.ActionLink("Chi tiết", "DetailList", new { id = item.IdDH })
+            </td>
+
+        </tr>
+    }
+
+</table>
+  Trang @( Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+<div class="MenuPage">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+</div>

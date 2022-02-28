@@ -1,0 +1,56 @@
+﻿@model IEnumerable<DoUongOnline.Models.ChiTietPhieuNhap>
+
+@{
+    ViewBag.Title = "Groupby";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+
+<h2>Groupby</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IdCTPN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SoLuongNhap)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GiaNhap)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdNL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdPN)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.OrderBy(x => x.IdNL)) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdCTPN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SoLuongNhap)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GiaNhap)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdNL)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdPN)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+        </td>
+    </tr>
+}
+
+</table>

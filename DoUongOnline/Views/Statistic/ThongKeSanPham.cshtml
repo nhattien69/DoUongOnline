@@ -1,0 +1,113 @@
+﻿@model IEnumerable<DoUongOnline.Models.ViewModel>
+@{
+    ViewBag.Title = "ThongKeSanPham";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+
+
+<ol class="breadcrumb" style="font-size:large">
+    <li class="breadcrumb-item">
+        <a>Quản lý</a>
+    </li>
+    <li class="breadcrumb-item active">Thống kê sản phẩm </li>
+</ol>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-header" style="font-size:x-large">
+                <i class="fa fa-table"></i> Sản phẩm theo ngày
+            </div>
+            <!-- Example Bar Chart Card-->
+            @{Html.RenderAction("SanPhamTrongNgay", "Statistic");
+            }
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card-header" style="font-size:x-large">
+                    <i class="fa fa-table"></i> Top 5 sản phẩm bán chạy
+                </div>
+                <table style="margin-top:10px" class="table table-bordered table-striped">
+                    <tr>
+                        <th>Mã sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Hình ảnh</th>
+                        <th>Giá bán</th>
+                        <th>Tổng số lượng đã bán</th>
+                    </tr>
+                    @foreach (var i in Model)
+                    {
+                        <tr >
+                            <td>@Html.DisplayFor(model => i.IdSP)</td>
+                            <td>@Html.DisplayFor(model => i.NameSP)</td>
+                            <td><img src="@Url.Content(i.ImageSP)" height="60" width="60" /></td>
+                            <td>
+                                @{ string giaban = i.priceSP.ToString("#,##");}
+                                @Html.DisplayFor(modelItem => giaban)
+                            </td>
+                            <td style="text-align:center">@Html.DisplayFor(model => i.Sum_Quantity)</td>
+                        </tr>
+                    }
+                </table>
+            </div>      
+            <div class="col-lg-4">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-pie-chart"></i> Sản phẩm được bán
+                    </div>
+                    <div class="card-body">
+                        <canvas id="myPieChart" width="80" height="80"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+<div class="row" style="margin-top:-25px">
+   
+</div>
+
+<script src="~/Scripts/Chart.min.js"></script>
+<script src="~/Scripts/Chart.js"></script>
+@{
+    List<String> name = (List<String>)ViewBag.name;
+    List<int> total = (List<int>)ViewBag.total;
+    List<int> C2sl = (List<int>)ViewBag.C2sl;
+    List<String> C2name = (List<String>)ViewBag.C2name;
+    List<Double> C1sl = (List<Double>)ViewBag.C1sl;
+    List<String> C1name = (List<String>)ViewBag.C1name;
+    <script>
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+        function getListColor(i) {
+            var li = [];
+            for (var j = 0; j < i; j++) {
+                li.push(getRandomColor());
+            }
+            return li;
+        }
+    </script>
+    <script>
+        Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+        Chart.defaults.global.defaultFontColor = '#292b2c';
+            var ctx = document.getElementById("myPieChart");
+            var colors = getListColor(@name.Count);
+            var myPieChart = new Chart(ctx, {
+
+            type: 'pie',
+            data: {
+
+            labels: @Html.Raw(Json.Encode(name)),
+            datasets: [{
+            data: @Json.Encode(total),
+            backgroundColor: colors,
+            }],
+            },
+            });
+    </script>
+}
+    

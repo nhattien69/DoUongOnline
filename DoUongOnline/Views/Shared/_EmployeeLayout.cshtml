@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://use.fontawesome.com/your-embed-code.js"></script>
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <title>The coffee shop</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+
+        footer.sticky-footer {
+            position: absolute;
+            right: 0;                
+            width: 100%;        
+            height: 56px;
+            background-color: darkorange;
+            line-height: 55px;
+        }
+        .divider {         
+            border-style: solid;
+            height: 1px;
+        }
+            .navbar-nav > li > .dropdown-menu {
+            background-color: darkorange;          
+        }      
+    </style>
+</head>
+<body>
+    @{
+        if (Session["employee"] == null)
+        {
+            Response.Redirect("~/Employee/Login");
+        }
+    }
+
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color:darkorange">
+        
+        <div class="container" style="width:max-content">
+
+            <div class="navbar-collapse collapse">
+
+                @if (Session["employee"] != null && ((DoUongOnline.Models.NhanVien)Session["employee"]).IdLoaiNV.ToString() == "QL")
+                { 
+                    <a style="font-size:x-large;color:white;margin-left:-50px" class="navbar-brand" href="@Url.Action("Index", "Employee")">Quản lý</a>
+                }
+                @if (Session["employee"] != null && ((DoUongOnline.Models.NhanVien)Session["employee"]).IdLoaiNV.ToString() == "NV")
+                {
+                    <a style="font-size:x-large;color:white" class="navbar-brand" href="@Url.Action("Index", "Employee")">Nhân viên</a>
+                }
+                @if (Session["employee"] != null)
+                {
+                    DoUongOnline.Models.NhanVien admin = (DoUongOnline.Models.NhanVien)Session["employee"];
+                    <ul class="nav navbar-nav" style="margin-left:1000px">
+                        <li class="dropdown">
+                            <a style="font-size:large;color:white" href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-address-card"></i> @admin.TenNhanVien<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu" style="width:100%">
+                                <li style="border:solid;background-color:white"> <a style="padding:20px 10px 10px 10px" href="@Url.Action("Edit", "Admin", new { id = admin.TenNhanVien })"><i class="fa fa-edit"></i> Thông tin Cá nhân</a></li>
+                                <li style="border:solid;margin-top:2px;background-color:white;display:grid"><a style="padding:20px 10px 10px 10px" class="nav-link" href="@Url.Action("Logout", "Employee")"><i class="fa fa-sign-out"></i> Đăng xuất</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                }
+            </div>
+        </div>
+
+
+        @if (Session["employee"] != null)
+        {
+
+            <div class="navbar navbar-inverse" id="navbarToggleExternalContent" style=" width: 180px; position: fixed; border-radius: 0; height: 100%">
+                <ul class="nav navbar-nav " style="margin-top: 20px">
+                    @if (Session["employee"] != null && ((DoUongOnline.Models.NhanVien)Session["employee"]).IdLoaiNV.ToString() == "QL")
+                    {
+                        <li style="margin-left:2px;margin-bottom:12px" class="dropdown">
+                            <a style="color:#E0E0E0;font-size:large" href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-circle"></i> Nhân viên <span class="caret"></span></a>
+                            <ul class="dropdown-menu" style="width:max-content" role="menu">
+                                <li id="menu"><a style="padding:3px 12px;font-weight:bold;font-size:medium " href="@Url.Action("List", "Employee")"><i style="margin-left:-3px;margin-right:5px" class="fa fa-list"></i> Danh sách </a></li>
+                                <li class="divider"></li>
+                                <li id="menu"><a style="padding:3px 12px;font-weight:bold;font-size:medium " href="@Url.Action("Create", "Employee")"><i style="margin-left:-3px;margin-right:5px" class="fa fa-user-plus"></i> Tạo nhân viên </a></li>
+
+                            </ul>
+                        </li>
+                        <li style="margin-left:2px;margin-bottom:12px" class="dropdown">
+                            <a style="text-decoration:none;color:#E0E0E0;font-size:large" href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users"></i> Khách hàng <span class="caret"></span></a>
+                            <ul style="width:max-content" class="dropdown-menu" role="menu">
+                                <li id="menu"><a style="padding:3px 12px;font-weight:bold;font-size:medium " href="@Url.Action("List", "Customer")"><i style="margin-left:-3px;margin-right:5px" class="fa fa-list"></i> Danh sách </a></li>
+                                <li class="divider"></li>
+                                <li id="menu"><a style="padding:3px 12px;font-weight:bold;font-size:medium " href="@Url.Action("ChatWithCustomer", "Customer")"><i style="margin-left:-3px;margin-right:5px" class="fa fa-commenting"></i> Tin nhắn</a></li>
+                            </ul>
+                        </li>
+
+                    }
+                    <li style="margin-left:2px;margin-bottom:12px" class="dropdown">
+                        <a style="text-decoration:none;color:#E0E0E0;font-size:large" href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-home"></i> Kho <span class="caret"></span></a>
+                        <ul style="width:max-content" class="dropdown-menu" role="menu">
+                            <li id="menu"><a style="padding:3px 12px;font-weight:bold;font-size:medium " href="@Url.Action("ListKho", "Component")"><i style="margin-left:-3px;margin-right:5px" class="fa fa-list"></i>Kho nguyên liệu </a></li>
+                            <li class="divider"></li>
+                            <li id="menu"><a style="padding:3px 12px;font-weight:bold;font-size:medium " href="@Url.Action("ListPN", "Component")"><i style="margin-left:-3px;margin-right:5px" class="fa fa-pencil-square"></i> Phiếu nhập</a></li>
+                        </ul>
+                    </li>
+                    @if (Session["employee"] != null && ((DoUongOnline.Models.NhanVien)Session["employee"]).IdLoaiNV.ToString() == "NV")
+                    {
+                        <li style="margin-left:2px;margin-bottom:12px" class="dropdown">
+                            <a style="text-decoration:none;color:#E0E0E0;font-size:large" href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users"></i> Khách hàng <span class="caret"></span></a>
+                            <ul style="width:max-content" class="dropdown-menu" role="menu">
+                                <li id="menu"><a style="padding:3px 12px;font-weight:bold;font-size:medium " href="@Url.Action("ChatWithCustomer", "Customer")"><i style="margin-left:-3px;margin-right:5px" class="fa fa-commenting"></i> Tin nhắn</a></li>
+                            </ul>
+                        </li>
+                    }
+                    <li class="divider"></li>
+
+                    <li style="margin-left:2px;margin-bottom:12px" class="dropdown">
+                        <a style="text-decoration:none;color:#E0E0E0;font-size:large" href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bookmark"></i> Sản phẩm <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li id="menu"><a style="padding:3px 12px;font-weight:bold;font-size:medium " href="@Url.Action("List", "Product")"><i style="margin-left:-3px;margin-right:5px" class="fa fa-list"></i> Danh sách </a></li>
+                            <li class="divider"></li>
+                            <li id="menu"><a style="padding:3px 12px;font-weight:bold;font-size:medium " href="@Url.Action("Create", "Product")"><i style="margin-left:-3px;margin-right:5px" class="fa fa-cart-plus"></i> Tạo sản phẩm </a></li>
+                            <li class="divider"></li>
+                            <li id="menu"><a style="padding:3px 12px;font-weight:bold;font-size:medium " href="@Url.Action("ListDiscount", "Product")"><i style="margin-left:-3px;margin-right:5px" class="fa fa-percent"></i> Khuyến mãi </a></li>
+                           
+                        </ul>
+                    </li>
+
+                    <li class="divider"></li>
+
+                    <li style="margin-left:2px;margin-bottom:12px" class="dropdown">
+                        <a style="text-decoration:none;color:#E0E0E0;font-size:large"  href="@Url.Action("List", "Order")"><i class="fa fa-shopping-cart"></i> Đơn hàng </a>                    
+                    </li>
+
+                    <li class="divider"></li>
+
+                    <li style="margin-left:2px;margin-bottom:12px" class="dropdown">
+                        <a style="text-decoration:none;color:#E0E0E0;font-size:large" href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-line-chart"></i> Thống kê <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li id="menu"><a style="padding:3px 12px;font-weight:bold " href="@Url.Action("List", "Invoice")"><i style="margin-left:-3px;margin-right:5px" class="fa fa-list"></i> Hóa đơn </a></li>
+                            <li class="divider"></li>                           
+                            <li id="menu"><a style="padding:3px 12px;font-weight:bold " href="@Url.Action("LoiNhuan", "Statistic")"><i style="margin-left:-3px;margin-right:5px" class="fa fa-area-chart"></i> Lợi nhuận</a></li>
+                            <li class="divider"></li>
+                            <li id="menu"><a style="padding:3px 12px;font-weight:bold " href="@Url.Action("ThongKeSanPham", "Statistic")"><i style="margin-left:-3px;margin-right:5px" class="fa fa-cart-plus"></i> Top sản phẩm</a></li>
+                            <li class="divider"></li>
+                            <li id="menu"><a style="padding:3px 12px;font-weight:bold " href="@Url.Action("ThongKeNguoiDung", "Statistic")"><i style="margin-left:-3px;margin-right:5px" class="fa fa-users"></i> Top khách hàng</a></li>
+
+                        </ul>
+                    </li>
+
+
+                    <li style="margin-left:2px;margin-bottom:12px" class="dropdown">
+                        <a style="text-decoration:none;color:#E0E0E0;font-size:large" href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-sitemap"></i> Thiết lập <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li id="menu"><a style="padding:3px 12px;font-weight:bold " href="@Url.Action("ListLoaiNV", "Employee")"><i style="margin-left:-3px;margin-right:5px" class="fa fa-wrench"></i> Loại nhân viên </a></li>
+                            <li class="divider"></li>
+                            <li id="menu"><a style="padding:3px 12px;font-weight:bold" href="@Url.Action("ListLoaiSP", "Product")"><i style="margin-left:-3px;margin-right:5px" class="fa fa-wrench"></i> Loại sản phẩm </a></li>
+                            <li class="divider"></li>
+                            <li id="menu"><a style="padding:3px 12px;font-weight:bold" href="@Url.Action("List", "Customer")"><i style="margin-left:-3px;margin-right:5px" class="fa fa-wrench"></i> Loại tình trạng</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+        }
+    </div>
+
+
+    @if (Session["employee"] != null)
+    {
+        <div class="container body-content" style="margin-left :200px;margin-top:10px;height:1000px">
+            @RenderBody()
+        </div>
+        <footer class="sticky-footer">
+            <div class="container">
+                <div class="text-center" style="margin-left:150px">
+                    <small style="color:white">Copyright © @DateTime.Now.Year - The Coffee Shop System</small>
+                </div>
+            </div>
+        </footer>
+    }
+
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

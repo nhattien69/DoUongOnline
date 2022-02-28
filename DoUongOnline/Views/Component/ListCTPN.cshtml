@@ -1,0 +1,63 @@
+﻿@using DoUongOnline.Models;
+@using PagedList.Mvc
+@model PagedList.PagedList<ChiTietPhieuNhap>
+
+@{
+    ViewBag.Title = "ListCTPN";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+
+
+    <div>
+
+        <input class="btn btn-primary" style="margin-top:10px" value="Tạo chi tiết" type="submit" onclick="location.href='@Url.Action("CreateCTPN", "Component", new { id = ViewBag.IdPN })'" />
+
+    </div>
+
+
+&ensp;
+<ol class="breadcrumb" style="font-size:large">
+    <li class="breadcrumb-item">
+        <a>Quản lý</a>
+    </li> 
+    <li class="breadcrumb-item active">Chi tiết phiếu nhập  @Session["IdPN"] </li>
+</ol>
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>
+            Nguyên liệu
+        </th>
+        <th>
+            Số lượng nhập
+        </th>
+        <th>
+            Đơn vị
+        </th>
+        <th>
+            Giá nhập
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NguyenLieu.TenNL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuongNhap)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NguyenLieu.DonVi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GiaNhap)
+            </td>
+            <td>
+                @Html.ActionLink("Chỉnh sửa", "Edit", new { /* id=item.PrimaryKey */ }) |
+            </td>
+        </tr>
+    }
+
+</table>

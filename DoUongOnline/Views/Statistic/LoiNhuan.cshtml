@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewBag.Title = "LoiNhuan";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+
+
+<ol class="breadcrumb" style="font-size:large">
+    <li class="breadcrumb-item">
+        <a>Quản lý</a>
+    </li>
+    <li class="breadcrumb-item active">Thống kê lợi nhuận </li>
+</ol>
+
+@using (Html.BeginForm("LoiNhuan", "Statistic", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row" style="margin-top:0px;margin-bottom:10px">
+        <div class="col-md-3">
+            <label for="date_start">Tháng</label>
+            @Html.TextBox("month", null, new { @type = "month", @class = "form-control" })
+
+        </div>
+        <div class="col-md-2">
+            <label for="date_start" style="visibility:hidden">End Date</label>
+            <input type="submit" onclick="loinhuan();" class="btn btn-primary btn-block" value="Tra lợi nhuận">
+        </div>
+    </div>
+}
+<div class="row">
+    <div class="col-lg-6">
+        <!-- Example Bar Chart Card-->
+        @{Html.RenderAction("PN", "Statistic");
+        }
+    </div>
+
+    <div class="col-lg-6">
+        <!-- Example Bar Chart Card-->
+        @{Html.RenderAction("DT", "Statistic");
+        }
+    </div>
+</div>
+
+<div id="LN" class="alert alert-success"><b>LƠI NHUẬN CỦA THÁNG @ViewBag.loinhuan VND</b></div>
+<script type="text/javascript">
+    function loinhuan() {
+        //Get the print button and put it into a variable
+        var printButton = document.getElementById("LN");         
+        onclick()
+        printButton.style.visibility = 'visible';
+    }
+</script>

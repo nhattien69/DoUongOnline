@@ -1,0 +1,274 @@
+﻿@model DoUongOnline.Models.SanPham
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+
+    * {
+        font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    }
+
+    .container {
+        margin-top: 100px;
+        width: 950px;
+        box-shadow: 0 4px 8px 0 rgb(228 228 228), 0 6px 20px 0 rgb(228 228 228);
+        border-radius: 7px;
+    }
+
+    .imagedetail {
+        width: 400px;
+        height: 400px;
+        margin: 25px 0px;
+        border-collapse: collapse;
+        border-radius: 7px;
+    }
+
+    .vanban {
+        width: 400px;
+    }
+
+    .title_pro, .price_pro {
+        color: black;
+    }
+
+    .panel {
+        margin: 30px 0px;
+    }
+
+    .chonsize {
+        width: 400px;
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 15px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        align-items: center;
+    }
+
+        .chonsize input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+        border-radius: 50%;
+    }
+
+    .chonsize input:checked ~ .checkmark {
+        background-color: #feab3a;
+    }
+
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    .chonsize input:checked ~ .checkmark:after {
+        display: block;
+    }
+
+    .chonsize .checkmark:after {
+        top: 9px;
+        left: 9px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: white;
+    }
+
+    .panel-heading {
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    #btnMinus, #btnPlus {
+        border: none !important;
+        border-radius: 50%;
+        color: white;
+        font-size: 20px;
+        width: 35px;
+    }
+
+    #btnPlus {
+        background-color: #fb8d17;
+    }
+
+    #btnAddToCart {
+        border-radius: 25px;
+        border: none !important;
+        height: 50px;
+        width: 400px;
+        background-color: #fb8d17;
+        color: white;
+    }
+</style>
+
+<script>
+    // Nút cộng
+    function plus() {
+        // Ép kiểu value của input type=number
+        // Input là hệ thập phân
+        var value = parseInt(document.getElementById("lbSL").innerHTML, 10);
+        //value = isNaN(value) ? 0 : value;
+        value++;
+        document.getElementById("lbSL").innerHTML = value;
+        document.getElementById("txtSL").value = value;
+        document.getElementById("btnMinus").disabled = false;
+        document.getElementById("btnMinus").style.backgroundColor = '#fb8d17';
+
+        // Tính tổng giá tiền
+        var total = value * @Model.GiaBan;
+        document.getElementById("btnAddToCart").value = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "đ - Thêm vào giỏ hàng";
+
+        // disable nút thêm giỏ hàng
+        var slsm = @Model.SoLuongCon - value;
+
+        if (slsm < 0) {
+            document.getElementById("btnAddToCart").setAttribute('disabled', 'disabled');
+            document.getElementById("btnAddToCart").style.backgroundColor = "#C0C0C0";
+            document.getElementById("slsm").innerHTML = "Sản phẩm hết hàng";
+            console.log(slsm);
+        } else {
+            document.getElementById('btnAddToCart').removeAttribute('disabled');
+            document.getElementById("btnAddToCart").style.backgroundColor = "#fb8d17";
+            document.getElementById("slsm").innerHTML = "";
+            console.log(slsm);
+        }
+    }
+
+    // Nút trừ
+    function minus() {
+        // Ép kiểu value của input type=number
+        // Input là hệ thập phân
+        var value = parseInt(document.getElementById("lbSL").innerHTML, 10);
+        //value = isNaN(value) ? 0 : value;
+        if (value <= 1) {
+            document.getElementById("btnMinus").disabled = true;
+            document.getElementById("btnMinus").style.backgroundColor = '#efefef';
+        }
+        else {
+            value--;
+            document.getElementById("lbSL").innerHTML = value;
+            document.getElementById("txtSL").value = value;
+
+            // Tính tổng giá tiền
+            var total = value * @Model.GiaBan;
+            document.getElementById("btnAddToCart").value = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "đ - Thêm vào giỏ hàng";
+        }
+
+        // disable nút thêm giỏ hàng
+        var slsm = @Model.SoLuongCon - value;
+
+        if (slsm < 0) {
+            document.getElementById("btnAddToCart").setAttribute('disabled', 'disabled');
+            document.getElementById("btnAddToCart").style.backgroundColor = "#C0C0C0";
+            document.getElementById("slsm").innerHTML = "Sản phẩm hết hàng";
+            console.log(slsm);
+        } else {
+            document.getElementById('btnAddToCart').removeAttribute('disabled');
+            document.getElementById("btnAddToCart").style.backgroundColor = "#fb8d17"
+            document.getElementById("slsm").innerHTML = "";
+            console.log(slsm);
+        }
+    }
+</script>
+
+
+<body>
+    <div class="container">
+        <div class="col-lg-12 col-lg-6 leftDetail">
+            <img class="imagedetail" src="@Url.Content(Session["hinhanhh"].ToString())" />
+            <div>
+                <p class="vanban">
+                    @Html.DisplayFor(model => model.MoTa)
+                </p>
+            </div>
+        </div>
+
+        <div class="col-lg-6 rightdetails">
+            <h2 class="title_pro">@Html.DisplayFor(model => model.TenSP)</h2>
+            @*<p class="price_pro">@String.Format("{0:#,##0}đ", Model.GiaBan)</p>*@
+            @if (Model.IdKM == null)
+            {
+                <p class="price_card">@String.Format("{0:#,##0}đ", Model.GiaBan)</p>
+                //<p>&nbsp</p>
+                <b id="slsm" style="font: bold"></b>
+            }
+            else
+            {
+            <div>
+                <p class="price_card" style="text-decoration-line: line-through">@String.Format("{0:#,##0}đ", Model.GiaBan)</p>
+                @{double giasaukm = Model.GiaBan - ((Model.GiaBan * Model.KhuyenMai.PhanTramKM) / 100);
+                }
+                <p class="price_card" style="color: red">@String.Format("{0:#,##0}đ", giasaukm)</p>
+                <b id="slsm" style="font: bold"></b>
+            </div>
+            }
+
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">CHỌN SIZE (BẮT BUỘC)</div>
+                <div class="panel-body">
+                    <label class="chonsize">
+                        Vừa + 0đ
+                        <input type="radio" checked="checked" name="radio">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="chonsize">
+                        Lớn + 6,000đ
+                        <input type="radio" name="radio">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                @using (Html.BeginForm("AddToCart", "ShoppingCart", new { id = Model.IdSP }))
+                {
+                    <div style="text-align: center;">
+                        <button type="button" id="btnMinus" onclick="minus();">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <label id="lbSL">1</label>
+                        <input type="hidden" id="txtSL" name="txtSoLuong" />
+                        <button type="button" id="btnPlus" onclick="plus()">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                    <br />
+
+                    <div style="text-align: center;">
+                        <input type="submit" id="btnAddToCart" class="btnbuy" />
+                    </div>
+
+
+
+                    <script>
+                        var value = parseInt(document.getElementById("lbSL").innerHTML, 10);
+                        document.getElementById("txtSL").value = value;
+
+                        // Tính tổng giá tiền
+                        var total = value * @Model.GiaBan;
+                        document.getElementById("btnAddToCart").value = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "đ - Thêm vào giỏ hàng";
+
+                    </script>
+                }
+            </div>
+        </div>
+    </div>
+</body>

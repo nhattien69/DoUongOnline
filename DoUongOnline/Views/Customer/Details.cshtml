@@ -1,0 +1,103 @@
+﻿@model DoUongOnline.Models.KhachHang
+
+@{
+    ViewBag.Title = "ProfileDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .user-row {
+        margin-bottom: 14px;
+    }
+
+        .user-row:last-child {
+            margin-bottom: 0;
+        }
+
+    .dropdown-user {
+        margin: 13px 0;
+        padding: 5px;
+        height: 100%;
+    }
+
+        .dropdown-user:hover {
+            cursor: pointer;
+        }
+
+    .table-user-information > tbody > tr {
+        border-top: 1px solid rgb(221, 221, 221);
+    }
+
+        .table-user-information > tbody > tr:first-child {
+            border-top: 0;
+        }
+
+
+        .table-user-information > tbody > tr > td {
+            border-top: 0;
+        }
+
+    .toppad {
+        margin-top: 20px;
+    }
+</style>
+
+<div class="container">
+    <div style="margin-top:50px" class="row">
+
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
+
+            <div style="border-color:#fb8d17" class="panel panel-info">
+                <div style="background-color:#fb8d17; color: white" class="panel-heading">
+                    <h3 class="panel-title">Thông tin cá nhân</h3>
+                </div>
+
+                <div class="panel-body center-block">
+                    <div class="row">
+                        <div class=" col-md-9 col-lg-9 ">
+                            <table style="margin-left: 70px" class="table table-user-information">
+                                <tbody>
+                                    <tr>
+                                        <td>@Html.LabelFor(model => model.TenKhachHang)</td>
+                                        <td>@Html.DisplayFor(model => model.TenKhachHang)</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>@Html.LabelFor(model => model.NgaySinh)</td>
+                                        <td>@Html.DisplayFor(model => model.NgaySinh)</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>@Html.LabelFor(model => model.EmailKH)</td>
+                                        <td>@Html.DisplayFor(model => model.EmailKH)</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>@Html.LabelFor(model => model.DiaChi)</td>
+                                        <td>@Html.DisplayFor(model => model.DiaChi)</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>@Html.LabelFor(model => model.NgayTaoTK)</td>
+                                        <td>@Html.DisplayFor(model => model.NgayTaoTK)</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>@Html.LabelFor(model => model.SDTKH)</td>
+                                        <td>@Html.DisplayFor(model => model.SDTKH)</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                            <div style="margin-left:180px">
+                                <a>@Html.ActionLink("Chỉnh sửa", "UpdateInfo", new { id = Model.IdKH })</a> ||
+                                <a href="@Url.Action("Logout", "Customer")"><i class="fa fa-sign-out"></i>Đăng xuất</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

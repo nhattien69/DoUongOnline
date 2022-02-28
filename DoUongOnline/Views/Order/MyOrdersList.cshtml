@@ -1,0 +1,54 @@
+﻿@model IEnumerable<DoUongOnline.Models.DonHang>
+
+@{
+    ViewBag.Title = "MyOrdersList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .container {
+        margin-top: 30px;
+    }
+
+    h2 {
+        text-align: center;
+    }
+</style>
+
+@*@if(TempData["Pay"] != null)
+    {
+        <script>
+            alert("Bạn đã thanh toán thành công")
+        </script>
+        TempData["Pay"] = "";
+    }*@
+
+<div class="container">
+    <h2>Đơn hàng của tôi</h2>
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>STT</th>
+            <th>Ngày đặt đơn</th>
+            <th>Địa chỉ</th>
+            <th>Tổng tiền</th>
+            <th>Tình trạng</th>
+        </tr>
+
+        @{
+            int i = 0;
+            foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>@i</td>
+                    <td>@item.NgayTaoDon.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
+                    <td>@item.DiaChiGiaoHang</td>
+                    <td>@item.TongTien</td>
+                    <td id="tinhtrang">@item.TinhTrangDonHang.TenTinhTrangDH</td>
+                    <td><a href="/Order/OrderDetail/@item.IdDH">Xem chi tiết</a></td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+

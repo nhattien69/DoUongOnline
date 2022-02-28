@@ -1,0 +1,221 @@
+﻿@model DoUongOnline.Models.KhachHang
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <title>Login Candidate</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        #gtco-header {
+            background-size: cover;
+            background-position: top center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        .gtco-cover {
+            height: 700px;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            position: relative;
+            float: left;
+            width: 100%;
+        }
+
+            .gtco-cover .overlay {
+                z-index: 1;
+                position: absolute;
+                bottom: 0;
+                top: 0;
+                left: 0;
+                right: 0;
+                background: rgba(0, 0, 0, 0);
+            }
+
+            .gtco-cover > .gtco-container {
+                position: relative;
+                z-index: 10;
+            }
+
+        .gtco-container {
+            max-width: 1100px;
+            position: relative;
+            margin: 0 auto;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+            font-size: 2rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            text-align: left;
+            background-color: #fff;
+        }
+
+        .card {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid rgba(0,0,0,.125);
+            border-radius: .25rem;
+        }
+
+        a {
+            color: #FBB448;
+            -webkit-transition: 0.5s;
+            -o-transition: 0.5s;
+            transition: 0.5s;
+        }
+
+            a:hover {
+                color: white;
+                background-color: transparent;
+                text-decoration: underline;
+            }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .ml-auto, .mx-auto {
+            margin-left: auto !important;
+        }
+
+        .mr-auto, .mx-auto {
+            margin-right: auto !important;
+        }
+
+        .mt-5, .my-5 {
+            margin-top: 6rem !important;
+        }
+
+        .card-header {
+            padding: .75rem 1.25rem;
+            margin-bottom: 0;
+            background-color: rgba(0,0,0,.03);
+            border-bottom: 1px solid rgba(0,0,0,.125);
+        }
+
+            .card-header:first-child {
+                border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
+            }
+
+        .card-body {
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+            padding: 1.25rem;
+        }
+
+        label {
+            display: inline-block;
+            margin-bottom: .5rem;
+        }
+
+        .card-login {
+            max-width: 430px;
+        }
+
+        input {
+            max-width: 400px;
+        }
+
+        .form-control {
+            display: block;
+            width: 1000px;
+            padding: .375rem .75rem;
+            font-size: 1.8rem;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-image: none;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        }
+
+        .container {
+            max-width: 960px;
+        }
+    </style>
+</head>
+<div id="gtco-header" class="gtco-cover gtco-cover-md">
+    <div class="overlay"> </div>
+    <div class="gtco-container">
+        <div class="card card-login mx-auto mt-5">
+            <div class="card-header">Đăng kí tài khoản</div>
+            <div class="card-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+
+                    <div class="form-group">
+                        <label for="exampleInputUsername"><i class="fa fa-user"></i> Name</label>
+
+                        @Html.TextBoxFor(model => model.TenKhachHang, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TenKhachHang, null, new { @style = "color:red" })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1"><i class="fa fa-envelope"></i> Email</label>
+
+                        @Html.TextBoxFor(model => model.EmailKH, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.EmailKH, null, new { @style = "color:red" })
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="exampleInputPassword1"><i class="fa fa-lock"></i> Mật khẩu</label>
+                        @Html.PasswordFor(model => model.MatKhau, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MatKhau, null, new { @style = "color:red" })
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1"><i class="fa fa-address-book"></i> Địa chỉ</label>
+
+                        @Html.TextBoxFor(model => model.DiaChi, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.DiaChi, null, new { @style = "color:red" })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1"><i class="fa fa-calendar"></i> Ngày sinh</label>
+
+                        @Html.TextBoxFor(model => model.NgaySinh, new { @class = "form-control", @type = "date" })
+                        @Html.ValidationMessageFor(model => model.NgaySinh, null, new { @style = "color:red" })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputContact1"><i class="fa fa-mobile-phone"></i> Điện thoại</label>
+
+                        @Html.TextBoxFor(model => model.SDTKH, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SDTKH, null, new { @style = "color:red" })
+                    </div>
+
+
+
+
+                    <input style="font-size:2rem" type="submit" value="Đăng ký" class="btn btn-primary btn-block" />
+                }
+            </div>
+        </div>
+    </div>
+</div>

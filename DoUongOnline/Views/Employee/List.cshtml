@@ -1,0 +1,173 @@
+﻿@using DoUongOnline.Models;
+@using PagedList.Mvc;
+@model PagedList.PagedList<NhanVien>
+@{
+    ViewBag.Title = "List Employee";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<style>
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 22px;
+    }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    /* The slider */
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 17px;
+            left: 5px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    /*  th{
+        border: 1px solid black;
+        border-collapse: collapse;
+    }*/
+</style>
+<link href="~/Content/font-awesome.css" rel="stylesheet" />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <ol class="breadcrumb" style="font-size:large">
+            <li class="breadcrumb-item">
+                <a>Quản lý</a>
+            </li>
+            <li class="breadcrumb-item active">Danh sách nhân viên</li>
+        </ol>
+        <table class="table table-bordered table-striped">
+
+            <tr>
+                <th>
+                    Id Nhân viên
+                </th>
+                <th>
+                    Email Nhân viên
+                </th>
+                <th>
+                    Mật khẩu
+                </th>
+                <th>
+                    Tên nhân viên
+                </th>
+                <th>
+                    Điện thoại nhân viên
+                </th>
+                <th>
+                    Ngày sinh nhân viên
+                </th>
+                <th>
+                    Địa chỉ nhân viên
+                </th>
+                <th>
+                    Ngày cấp tài khoản
+                </th>
+                <th>
+                    Tình trạng nhân viên
+                </th>
+                <th>
+                    Loại nhân viên
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdNV)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmailNV)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MatKhau)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenNhanVien)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SDTNV)
+                    </td>
+                    <td>
+
+                        @Html.DisplayFor(modelItem => item.NgaySinh)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DiaChi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NgayCapTK)
+                    </td>
+                    <td>
+                        <label class="switch">
+                            <input type="checkbox" disabled="disabled" checked="@item.TinhTrang" />
+                            <span class="slider round"></span>
+                        </label>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LoaiNhanVien.TenLoaiNhanVien)
+                    </td>
+                    <td>
+                        @Html.ActionLink(" ", "Edit", new { id = item.IdNV}, new { @class = "fa fa-edit fa-lg" })
+                    </td>
+                </tr>
+
+            }
+        </table>
+
+        Trang @( Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+        <div class="MenuPage">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+        </div>
+    </div>
+}

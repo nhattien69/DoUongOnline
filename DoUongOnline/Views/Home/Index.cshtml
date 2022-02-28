@@ -1,0 +1,279 @@
+﻿@model IEnumerable<DoUongOnline.Models.SanPham>
+
+@{
+    ViewBag.Title = "ListProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #btn-chitiet {
+        background-color: #feab3a;
+        color: white;
+        border-radius: 12%;
+    }
+
+        #btn-chitiet :hover {
+            display: none;
+            background: #ffaf51;
+            text-decoration: underline;
+        }
+
+    .container {
+        margin-top: 100px;
+    }
+
+    ul.phanloai {
+        margin: 25px 0px 25px 330px;
+    }
+
+    .btn_phanloai {
+        background-color: white;
+        border: none !important;
+    }
+
+    .icon_phanloai {
+        background-color: #fff7e6;
+        width: 86px;
+        height: 86px;
+        border-radius: 50%;
+        overflow: hidden
+    }
+
+    a.xemchitiet {
+        color: black;
+        text-decoration: none;
+    }
+
+    .title_card:hover {
+        color: #fb8d17;
+    }
+
+    .col-lg-2 {
+        padding: 10px;
+    }
+
+    .card-pro {
+        box-shadow: 0 4px 8px 0 rgb(228 228 228), 0 6px 20px 0 rgb(228 228 228);
+        border-radius: 5px;
+    }
+
+    .content_card {
+        padding: 10px 10px 5px 10px;
+    }
+
+    .image_card {
+        border-radius: 5px;
+    }
+
+    .title_card {
+        font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+        font-weight: 600;
+        height: 50px;
+        line-height: 1.5;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        line-height: var(--space-24);
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+    }
+    .thumbnail {
+        border-radius: 17px;
+    }
+</style>
+
+@if (TempData["Add_Product_Success"] != null)
+{
+    <script>
+        window.alert('Thêm sản phẩm vào giỏ hàng thành công');
+    </script>
+    TempData["Add_Product_Success"] = null;
+}
+<div style="margin-top:60px" class="container">
+
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="~/Content/Images/banner1.jpg" alt="banner1" style="width:100%;">
+            </div>
+
+            <div class="item">
+                <img src="~/Content/Images/banner2.jpg" alt="banner2" style="width:100%;">
+            </div>
+
+            <div class="item">
+                <img src="~/Content/Images/banner3.jpg" alt="banner3" style="width:100%;">
+            </div>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+
+
+
+
+<div class="container">
+    <h2 style="text-align:center;margin-left: 18px">SẢN PHẨM CỦA CHÚNG TÔI</h2>
+
+    @*PHÂN LOẠI SẢN PHẨM*@
+    @using (Html.BeginForm())
+    {
+        <ul class="nav nav-pills phanloai">
+            <li style=" margin-right: 15px">
+                <button type="submit" value="" name="Search" class="btn_phanloai">
+                    <div class="icon_phanloai">
+                        <img src="~/Content/Images/duocyeuthichicon.png" style="height: 100%; padding-left: 5px;" />
+                    </div>
+                </button>
+            </li>
+            <li style=" margin-right: 15px">
+                <button type="submit" value="L01" name="Search" class="btn_phanloai">
+                    <div class="icon_phanloai">
+                        <img src="~/Content/Images/capheicon.png" style="height: 85%; padding-top: 18px" />
+                    </div>
+                </button>
+            </li>
+            <li style=" margin-right: 15px">
+                <button type="submit" value="L02" name="Search" class="btn_phanloai">
+                    <div class="icon_phanloai">
+                        <img src="~/Content/Images/tratraicayicon.png" style="height: 90%; " />
+                    </div>
+                </button>
+            </li>
+            <li style=" margin-right: 15px">
+                <button type="submit" value="L03" name="Search" class="btn_phanloai">
+                    <div class="icon_phanloai">
+                        <img src="~/Content/Images/daxayicon.png" style="height: 90%" />
+                    </div>
+                </button>
+            </li>
+            <li style=" margin-right: 15px">
+                <button type="submit" value="L04" name="Search" class="btn_phanloai">
+                    <div class="icon_phanloai">
+                        <img src="~/Content/Images/tainhaicon.png" style="height: 90%" />
+                    </div>
+                </button>
+            </li>
+        </ul>
+    }
+
+    @*HIỂN THỊ SẢN PHẨM*@
+    <div class="tab-content">
+        <div id="duocyeuthich" class="tab-pane fade in active">
+            <div class="row">
+                @if (ViewBag.Msg == null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <a href="/Home/Details/@item.IdSP" class="xemchitiet">
+                            <div class="col-sm-12 col-sm-6 col-md-4 col-lg-2">
+                                <div class="card-pro">
+                                    <div class="content_card">
+                                        <img class="image_card" src="@Url.Content(item.HinhAnh)" height="155" width="155" />
+                                        <p class="title_card">@Html.DisplayFor(model => item.TenSP)</p>
+                                        @if (item.IdKM == null)
+                                        {
+                                            <p class="price_card">@String.Format("{0:#,##0}đ", item.GiaBan)</p>
+                                            <p>&nbsp</p>
+                                        }
+                                        else
+                                        {
+                                            <div>
+                                                <p class="price_card" style="text-decoration-line: line-through">@String.Format("{0:#,##0}đ", item.GiaBan)</p>
+                                                @{double giasaukm = item.GiaBan - ((item.GiaBan * item.KhuyenMai.PhanTramKM) / 100);
+                                                }
+                                                <p class="price_card" style="color: red">@String.Format("{0:#,##0}đ", giasaukm)</p>
+                                            </div>
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<section style="background:#FFF7E6;margin-top:40px">
+    <br />
+    
+    <h2 style="text-align:center;color:orange;font-family: 'Pro Display', sans-serif"><i class="fa fa-coffee" style="margin-right:8px;color:orange"></i>Tin Tức</h2>
+    <br />
+    <div style="margin:0 30px 0 30px" class="row" >
+        <div class="col-sm-4">
+            <div>
+                <a style="color:black" href=@Url.Action("TinTuc","Home")><img style="width:400px;height:300px" src="~/Content/Images/Home1.jpg" alt="Paris"/> </a>
+                <p style="margin-top: 10px">04/01/2022</p>
+                <p style="margin-top: 5px"><strong>CHỌN HƯƠNG TINH TẾ BÍ KÍP THOÁT Ế DÀNH ...</strong></p>
+                
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div>
+                <a style="color:black" href=@Url.Action("TinTuc","Home")><img style="width:400px;height:300px" src="~/Content/Images/Home2.jpg" alt="New York" /></a>
+                <p style="margin-top: 10px">04/01/2022</>
+                <p style="margin-top: 5px"><strong>COMBO CÀ PHÊ NHÀ - NGON NHƯ QUÁN ... </strong></p>           
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div>
+                <a style="color:black" href=@Url.Action("TinTuc","Home")><img style="width:400px;height:300px" src="~/Content/Images/Home3.jpg" alt="San Francisco"/> </a>
+                <p style="margin-top: 10px">04/01/2022</p>
+                <p style="margin-top: 5px"><strong>ĐẦU TUẦN HĂNG SAY, THE COFFEE HOUSE...</strong></p>          
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div>
+                <a style="color:black" href=@Url.Action("TinTuc","Home")><img style="width:400px;height:300px" src="~/Content/Images/Home4.jpg" alt="San Francisco"/></a>
+                <p style="margin-top: 10px">04/01/2022</p>
+                <p style="margin-top: 5px"><strong>COMBO BÁNH NƯỚC - NĂNG LƯỢNG CẢ NGÀY</strong></p>
+
+               
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div>
+                <a style="color:black" href=@Url.Action("TinTuc","Home")><img style="width:400px;height:300px" src="~/Content/Images/Home5.jpg" alt="San Francisco"/></a>
+                <p style="margin-top: 10px">04/01/2022</p>
+                <p style="margin-top: 5px"><strong>TEAROMA CRUSH NHÀ MÌNH-THƠM BỪNG ...</strong></p>
+
+              
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div>
+                <a style="color:black" href=@Url.Action("TinTuc","Home")><img style="width:400px;height:300px" src="~/Content/Images/Home6.jpg" alt="San Francisco"/></a>
+                <p style="margin-top: 10px">04/01/2022</p>
+                <p style="margin-top: 5px"><strong>TRI ÂN NGÀY NHÀ GIÁO - TRAO NGÀN ...</strong></p>             
+            </div>
+        </div>
+
+    </div>
+</section>
+<div class="container">
+    <div class="jumbotron">
+        <img style="width:100%;height:100%" src="~/Content/Images/lienhe.png" />
+    </div>
+</div>
+

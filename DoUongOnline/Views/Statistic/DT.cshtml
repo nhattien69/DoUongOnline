@@ -1,0 +1,52 @@
+﻿@using DoUongOnline.Models;
+@using PagedList.Mvc;
+@model PagedList.PagedList<HoaDon>
+
+
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>
+            Mã hóa đơn
+        </th>
+        <th>
+            Ngày tạo hóa đơn
+        </th>
+        <th>
+            Tổng tiền
+        </th>
+        <th>
+            Người tạo hóa đơn
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdHD)
+            </td>          
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayTaoHD)
+            </td>
+            <td>
+                @{ string giaban = item.DonHang.TongTien.ToString("#,##");}
+                @Html.DisplayFor(modelItem => giaban)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NhanVien.TenNhanVien)
+            </td>
+            
+         
+
+        </tr>
+    }
+
+</table>
+
+  Trang @( Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+<div class="MenuPage">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+</div>
+<div class="alert alert-success"><b>Tổng doanh thu của tháng  @ViewBag.month2 là @ViewBag.doanhthu VND </b></div>

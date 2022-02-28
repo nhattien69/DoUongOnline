@@ -1,0 +1,41 @@
+﻿@model IEnumerable<DoUongOnline.Models.ViewModelNL>
+
+@{
+    ViewBag.Title = "ListKho";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+<ol class="breadcrumb" style="font-size:large">
+    <li class="breadcrumb-item">
+        <a>Quản lý</a>
+    </li>
+    <li class="breadcrumb-item active">Kho nguyên liệu</li>
+</ol>
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>
+            Nguyên liệu
+        </th>
+        <th>
+            Số lượng trong kho
+        </th>
+        <th>
+            Đơn vị
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nameNL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuong)            
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.donvi)            
+            </td>
+        </tr>
+    }
+
+</table>

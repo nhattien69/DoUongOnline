@@ -1,0 +1,276 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <title>The coffee shop</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        .gtco-nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            padding: 20px 0;
+            z-index: 1001;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+            .gtco-nav ul {
+                padding: 0;
+                margin: 8px 0 0 0px;
+            }
+
+                .gtco-nav ul li {
+                    padding: 0;
+                    margin: 0;
+                    list-style: none;
+                    display: inline;
+                }
+
+                    .gtco-nav ul li a {
+                        font-size: 16px;
+                        padding: 30px 10px;
+                        -webkit-transition: 0.3s;
+                        -o-transition: 0.3s;
+                        transition: 0.3s;
+                    }
+
+            .gtco-nav a {
+                padding: 5px 10px;
+                color: #fff;
+            }
+
+        a {
+            color: #FBB448;
+            -webkit-transition: 0.5s;
+            -o-transition: 0.5s;
+            transition: 0.5s;
+        }
+
+        .gtco-nav #gtco-logo {
+            font-size: 20px;
+            margin: 0;
+            padding: 0;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        ::selection {
+            color: #fff;
+            background: #FBB448;
+            background-image: initial;
+            background-position-x: initial;
+            background-position-y: initial;
+            background-size: initial;
+            background-repeat-x: initial;
+            background-repeat-y: initial;
+            background-attachment: initial;
+            background-origin: initial;
+            background-clip: initial;
+            background-color: rgb(251, 180, 72);
+        }
+
+        #gtco-footer .gtco-widget h3 {
+            margin-bottom: 15px;
+            font-weight: bold;
+            font-size: 15px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .row-pb-md {
+            padding-bottom: 4em !important;
+        }
+
+        #gtco-footer .gtco-widget {
+            margin-bottom: 0px;
+        }
+
+            #gtco-footer .gtco-widget .gtco-quick-contact {
+                padding: 0;
+                margin: 0;
+                display: inline;
+                display: block
+            }
+
+                #gtco-footer .gtco-widget .gtco-quick-contact li {
+                    padding: 0;
+                    margin: 0 20px 10px 0px;
+                    list-style: none;
+                    display: -moz-inline-stack;
+                    display: inline-block;
+                    zoom: 1;
+                    display: inline;
+                }
+
+        #gtco-footer {
+            background-color: #333333;
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            padding: 2em 0;
+            /*            padding: 7em 0;*/
+            clear: both;
+            position: relative;
+        }
+
+        .gtco-social-icons {
+            margin: 0;
+            padding: 0;
+        }
+
+            .gtco-social-icons li {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                display: -moz-inline-stack;
+                display: inline-block;
+                zoom: 1;
+                display: inline;
+            }
+
+        .gtco-container {
+            max-width: 1100px;
+            position: relative;
+            margin: 0 auto;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        #gtco-footer .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.3);
+            -webkit-transition: 0.5s;
+            -o-transition: 0.5s;
+            transition: 0.5s;
+        }
+
+        body {
+            font-family: "Lato", Arial, sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #777;
+            background: #fff;
+            padding-top: 50px;
+            padding-bottom: 0px;
+        }
+
+        a:hover {
+            color: white;
+            background-color: transparent;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="gtco-loader"></div>
+    <div id="page">
+
+        <nav class="gtco-nav" role="navigation" style="position: fixed;background:#fb8d17">
+            <div class="gtco-container">
+                <div class="row">
+                    <div class="col-sm-4 col-xs-12">
+                        <div id="gtco-logo" style="font-size:x-large;font-family:cursive"><a class="nav-link" href="@Url.Action("Index", "Home")">THE COFFEE SHOP</a></div>
+                    </div>
+                    @if (Session["customer"] != null)
+                    {
+                        DoUongOnline.Models.KhachHang can = (DoUongOnline.Models.KhachHang)Session["customer"];
+                        <div class="col-xs-8 text-right menu-1">
+                            <ul>
+                                <li style="display:inline">
+                                    <div class="dropdown">
+                                        @*<a style=" font-size: x-large " class="nav-link" href="@Url.Action("Index", "SelectSubject")"><i class="fa fa-pencil"></i> Do Test</a>*@
+                                        <div class="col-xs-8 text-right menu-1">
+                                            <ul>
+                                                <li><a class="nav-link" target="_blank" href="@Url.Action("ChatWithAdmin", "Customer")"><i class="fa fa-home"></i> Nhắn tin trực tuyến</a></li>
+                                                <li><a class="nav-link" href="@Url.Action("Register", "Candidate")"><i class="fa fa-book"></i> Menu</a></li>
+                                                <li>
+                                                    <span>
+                                                        <a class="nav-link" href="@Url.Action("ShowCart", "ShoppingCart")"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a> 
+                                                        @Html.Action("BagCart", "ShoppingCart")
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        @*&ensp;*@
+                                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                            <i class="fa fa-id-card"></i>
+                                            Hello @can.TenKhachHang
+                                            <span class="caret"></span>
+                                        </button>
+
+                                        <ul class="dropdown-menu" style="margin: 0 0 0 78%;">
+                                            <li style="border:solid;background-color:lightgray;display:grid"><a style="padding:20px 10px 10px 10px" href="@Url.Action("Details", "Customer", new { id = can.IdKH })"><i class="fa fa-edit"></i> Trang cá nhân</a></li>
+                                            <li style="border:solid;background-color:lightgray;display:grid"><a style="padding:20px 10px 10px 10px" class="nav-link" href="@Url.Action("MyOrdersList", "Order")"><i class="fa fa-list"></i> Đơn hàng của tôi</a></li>
+                                            <li style="border:solid;background-color:lightgray;display:grid"><a style="padding:20px 10px 10px 10px" class="nav-link" href="@Url.Action("Logout", "Customer")"><i class="fa fa-sign-out"></i>Đăng xuất</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-xs-8 text-right menu-1">
+                            <ul>
+                                <li><a class="nav-link" target="_blank" href="https://www.elib.vn"><i class="fa fa-home"></i> Trang chủ</a></li>
+                                <li><a class="nav-link" href="@Url.Action("Register", "Candidate")"><i class="fa fa-book"></i> Menu</a></li>
+                                <li><a class="nav-link" href="@Url.Action("Login", "Customer")"><i class="fa fa-sign-in"></i> Đăng nhập</a></li>
+                            </ul>
+                        </div>
+                    }
+                </div>
+            </div>
+        </nav>
+
+        @RenderBody()
+
+        <footer id="gtco-footer" role="contentinfo" style="background-image:url(/Content/Images/banner.jpg) " data-stellar-background-ratio="0.5">
+            <div class="overlay"></div>
+            <div class="gtco-container">
+                <div class="row row-pb-md">
+                    <div class="col-md-12 text-center">
+                        <div class="gtco-widget">
+                            <h3>Thông tin liên hệ</h3>
+                            <ul class="gtco-quick-contact">
+                                <li><a><i class="icon-phone"></i> 0909156394</a></li>
+                                <li><a><i class="icon-mail2"></i> coffeeandtea.contact@gmail.com</a></li>
+                                <li><a><i class="icon-chat"></i> Live Chat</a></li>
+                            </ul>
+                        </div>
+                        <div class="gtco-widget">
+                            <h3>Get Social</h3>
+                            <ul class="gtco-social-icons">
+                                <li><a href="#"><i class="icon-twitter"></i></a></li>
+                                <li><a href="#"><i class="icon-facebook"></i></a></li>
+                                <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                                <li><a href="#"><i class="icon-dribbble"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 text-center copyright">
+                        <p>
+                            <small style="color:white">Copyright © @DateTime.Now.Year - Coffee And Tea System</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "ThongKeNguoiDung";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+
+<html>
+<head>
+    <script src="~/Scripts/Chart.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        #chart_container {
+            width: 900px;
+            height: 450px;
+            border: 1px solid #ddd;
+            padding: 1px;
+            border-radius: 4px
+        }
+    </style>
+</head>
+
+<body>
+    <ol class="breadcrumb" style="font-size:large">
+        <li class="breadcrumb-item">
+            <a>Quản lý</a>
+        </li>
+        <li class="breadcrumb-item active">Thống kê khách hàng</li>
+    </ol>
+    <div class="card-header" style="font-size:x-large">
+        <i class="fa fa-table"></i> Top khách hàng 
+    </div>
+    <div id="chart_container">
+        <canvas id="bar_chart"></canvas>
+
+    </div>
+
+    <script>
+    var repArray = @Html.Raw(Json.Encode(ViewBag.Rep));
+    var user = @Html.Raw(Json.Encode(ViewBag.User));
+    var ctx = $("#bar_chart");
+    var barchart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: user,
+            datasets: [{
+                label: "SỐ ĐƠN HÀNG ĐÃ ĐẶT",
+                data: repArray,
+                backgroundColor: ["rgba(242,166,54,.5)", "rgba(145,65,72,.5)", "rgba(74,25,92,.5)","rgba(42,50,216,0.5)"],
+                borderColor: ["rgba(242,166,54)", "rgba(145,65,72)", "rgba(74, 25, 92)","rgba(52,50,216)"],
+                borderWidth:2
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'TOP KHÁCH HÀNG'
+            },
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Số đơn hàng'
+                    },
+                    ticks: { beginAtZero: true }
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Tên khách hàng'
+                    }
+                }]
+            },
+
+            legend: { display: false }
+        }
+    });
+
+    </script>
+</body>
+</html>
+
